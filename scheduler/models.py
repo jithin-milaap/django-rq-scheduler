@@ -20,9 +20,9 @@ from model_utils.models import TimeStampedModel
 class BaseJob(TimeStampedModel):
 
     name = models.CharField(_('name'), max_length=128, unique=True)
-    callable = models.CharField(_('callable'), max_length=2048)
+    callable = models.CharField(_('callable'), max_length=4096)
     enabled = models.BooleanField(_('enabled'), default=True)
-    queue = models.CharField(_('queue'), max_length=16)
+    queue = models.CharField(_('queue'), max_length=32)
     job_id = models.CharField(
         _('job id'), max_length=128, editable=False, blank=True, null=True)
     timeout = models.IntegerField(
@@ -90,7 +90,10 @@ class BaseJob(TimeStampedModel):
         super(BaseJob, self).delete(**kwargs)
 
     def scheduler(self):
-        return django_rq.get_scheduler(self.queue)
+        scheduler = django_rq.get_scheduler(self.queue)
+        scheduler.scheduler_key = scheduler.scheduler_key + ":" + str(self.queue)
+        scheduler.scheduled_jobs_key = scheduler.scheduled_jobs_key + ":" + str(self.queue)
+        return scheduler
 
     def is_schedulable(self):
         if self.job_id:
