@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('scheduler', '0006_auto_20191217_1127'),
+        ('scheduler', '0006_alter_max_length'),
     ]
 
     operations = [
