@@ -145,6 +145,7 @@ class ScheduledJob(ScheduledTimeMixin, BaseJob):
         verbose_name = _('Scheduled Job')
         verbose_name_plural = _('Scheduled Jobs')
         ordering = ('name', )
+        db_table = "scheduled_jobs"
 
 
 class RepeatableJob(ScheduledTimeMixin, BaseJob):
@@ -192,6 +193,7 @@ class RepeatableJob(ScheduledTimeMixin, BaseJob):
         verbose_name = _('Repeatable Job')
         verbose_name_plural = _('Repeatable Jobs')
         ordering = ('name', )
+        db_table = "repeatable_jobs"
 
 
 class CronJob(BaseJob):
@@ -234,3 +236,4 @@ class CronJob(BaseJob):
         verbose_name = _('Cron Job')
         verbose_name_plural = _('Cron Jobs')
         ordering = ('name', )
+        db_table = "cron_jobs"
